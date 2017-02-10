@@ -1,0 +1,10 @@
+1) rien
+2) aucun message serveur reçu, le client est déconnecté
+3)
+guermonm@epicea08:~/tpf/tpf/webserver$ telnet ::1 8080
+Trying ::1...
+telnet: Unable to connect to remote host: Connection refused
+pourquoi ? adresse en IPV6 alors que le serveur est configuré pour IPV4
+
+4)les deux clients reçoivent le message et peuvent envoyer et recevoir le message en echo, l'éventualité de plusieurs clients à déjà été gérée
+
