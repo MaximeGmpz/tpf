@@ -27,6 +27,7 @@ void main(void){
   
 
   while(1){
+    initialiser_signaux ();
     socket_client = accept ( socket_serveur , NULL , NULL );
     if ( socket_client == -1){
       perror ( " echec d'accept " ); // traitement de l'erreur 
@@ -35,7 +36,7 @@ void main(void){
    
       // On peut maintenant dialoguer avec le client
       const char * message_bienvenue = " Bonjour , bienvenue sur mon serveur 1 \n 2 \n 3 \n 4 \n 5 \n 6 \n 7 \n 8 \n 9 \n 10\n" ;
-      wait(1000);
+      
       write(socket_client,message_bienvenue,strlen(message_bienvenue));
       while(1){
 	lg = read(socket_client,buffer, 512);
