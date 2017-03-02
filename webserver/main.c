@@ -11,7 +11,22 @@
 
 char buffer[512];
 
-void initialiser_signaux(){
+void traitement_signal( int sig ){
+  printf ( "Signal %d reçu \n" , sig );
+  waitpid(-1, NULL, 0);
+}
+
+void initialiser_signaux ( void ){
+  struct sigaction sa ;
+  sa.sa_handler = traitement_signal ;
+  sigemptyset (&sa.sa_mask);
+  sa.sa_flags = SA_RESTART ;
+  if (sigaction(SIGCHLD,&sa,NULL) == -1){
+    perror("sigaction (SIGCHLD)");
+  }
+}
+
+void inialiser_signaux(){
   
   if ( signal ( SIGPIPE , SIG_IGN ) == SIG_ERR )
     {
@@ -27,7 +42,6 @@ void main(void){
   
 
   while(1){
-    initialiser_signaux ();
     socket_client = accept ( socket_serveur , NULL , NULL );
     if ( socket_client == -1){
       perror ( " echec d'accept " ); // traitement de l'erreur 
@@ -36,7 +50,6 @@ void main(void){
    
       // On peut maintenant dialoguer avec le client
       const char * message_bienvenue = " Bonjour , bienvenue sur mon serveur 1 \n 2 \n 3 \n 4 \n 5 \n 6 \n 7 \n 8 \n 9 \n 10\n" ;
-      
       write(socket_client,message_bienvenue,strlen(message_bienvenue));
       while(1){
 	lg = read(socket_client,buffer, 512);
