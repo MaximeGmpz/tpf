@@ -38,7 +38,7 @@ void main(void){
   initialiser_signaux();
   int socket_serveur = creer_serveur(8080);
 
-  int socket_client, lg ;
+  int socket_client ;
   
 
   while(1){
@@ -47,14 +47,15 @@ void main(void){
       perror ( " echec d'accept " ); // traitement de l'erreur 
     }
     if (fork() == 0){
+      FILE *fd = fdopen(socket_client,"w+");
    
       // On peut maintenant dialoguer avec le client
       const char * message_bienvenue = " Bonjour , bienvenue sur mon serveur 1 \n 2 \n 3 \n 4 \n 5 \n 6 \n 7 \n 8 \n 9 \n 10\n" ;
-      write(socket_client,message_bienvenue,strlen(message_bienvenue));
+      fprintf(fd,"<TPF>:",message_bienvenue);
       while(1){
-	lg = read(socket_client,buffer, 512);
+        fgets(buffer, 512,fd);
 	printf("le serveur a recu: %s\n",buffer);
-	write(socket_client,buffer, 512);
+	fprintf(fd,"<TPF>:",buffer);
       }
       
     }
