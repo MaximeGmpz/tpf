@@ -18,6 +18,10 @@ void traitement_signal( int sig ){
 
 void initialiser_signaux ( void ){
   struct sigaction sa ;
+  if ( signal ( SIGPIPE , SIG_IGN ) == SIG_ERR )
+    {
+      perror ( " signal " );
+    }
   sa.sa_handler = traitement_signal ;
   sigemptyset (&sa.sa_mask);
   sa.sa_flags = SA_RESTART ;
@@ -28,10 +32,7 @@ void initialiser_signaux ( void ){
 
 void inialiser_signaux(){
   
-  if ( signal ( SIGPIPE , SIG_IGN ) == SIG_ERR )
-    {
-      perror ( " signal " );
-    }
+  
 }
 
 void main(void){
