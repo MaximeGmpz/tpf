@@ -35,9 +35,7 @@ int creer_serveur(int port){
   struct in_addr {
     uint32_t s_addr ;
   };
-
   
-
   if ( listen ( socket_serveur,10)==-1){
     perror ( " listen socket_serveur " );
     // traitement de l'erreur
